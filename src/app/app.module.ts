@@ -11,6 +11,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
+import {RestService} from './services/rest.service';
 
 
 @NgModule({
@@ -28,8 +30,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatCardModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [RestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
