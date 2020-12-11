@@ -1,0 +1,103 @@
+<form [formGroup]="eventsForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="events-card">
+    <mat-card-header>
+      <mat-card-title>Events Search</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="ФИО *" formControlName="nameSurname">
+            <mat-error *ngIf="eventsForm.controls['nameSurname'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Подразделение *" formControlName="department">
+            <mat-error *ngIf="eventsForm.controls['department'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="События *" formControlName="event">
+              <mat-option *ngFor="let event of events" [value]="event.abbreviation">
+                {{ event.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="eventsForm.controls['event'].hasError('required')">
+              State is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Тема *" formControlName="theme">
+            <mat-error *ngIf="eventsForm.controls['theme'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Содержание *" formControlName="text">
+            <mat-error *ngIf="eventsForm.controls['text'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Вложение *" formControlName="file">
+            <mat-error *ngIf="eventsForm.controls['file'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Поиск" formControlName="search">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Дата и время" formControlName="date">
+            <mat-error *ngIf="eventsForm.controls['date'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!eventsForm.valid">Отправить</button>
+      <button mat-raised-button color="primary" type="button" (click)="onClear()">Очистить</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
