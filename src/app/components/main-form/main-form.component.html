@@ -2,6 +2,19 @@
   <mat-card class="events-card">
     <mat-card-header>
       <mat-card-title>Events Search</mat-card-title>
+      <mat-form-field class="full-width">
+        <input type="text"
+               placeholder="Поиск"
+               matInput
+               [value]="search"
+               (input)="onChange($event)"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of searched; let i = index" [value]="option" (click)="openDialog(option)">
+            {{option.theme}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </mat-card-header>
     <mat-card-content>
 
@@ -31,7 +44,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="События *" formControlName="event">
-              <mat-option *ngFor="let event of events" [value]="event.abbreviation">
+              <mat-option *ngFor="let event of eventCategories" [value]="event.abbreviation">
                 {{ event.name }}
               </mat-option>
             </mat-select>
@@ -71,14 +84,6 @@
             <mat-error *ngIf="eventsForm.controls['file'].hasError('required')">
               Last name is <strong>required</strong>
             </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Поиск" formControlName="search">
           </mat-form-field>
         </div>
       </div>

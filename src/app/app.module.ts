@@ -3,22 +3,25 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainFormComponent } from './components/main-form/main-form.component';
+import {DialogComponent, MainFormComponent} from './components/main-form/main-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import {RestService} from './services/rest.service';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainFormComponent
+    MainFormComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +32,11 @@ import {RestService} from './services/rest.service';
     MatRadioModule,
     MatCardModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [RestService],
   bootstrap: [AppComponent]

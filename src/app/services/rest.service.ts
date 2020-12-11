@@ -9,12 +9,8 @@ export class RestService {
   constructor(private http: HttpClient) {
   }
 
-  public getEvents(): Promise<any> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve([]);
-      }, 1000);
-    });
+  public getEvents(): any {
+    return this.http.get('http://localhost:3000/searchTheme');
   }
 
   public sendEvent(event): any {
