@@ -1,16 +1,17 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {RestService} from '../../services/rest.service';
-import {Subscription} from 'rxjs';
-import {IEvent, DialogData} from '../../types';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RestService } from '../../services/rest.service';
+import { Subscription } from 'rxjs';
+import { DialogData, IEvent } from '../../types';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 
 @Component({
   selector: 'app-main-form',
   templateUrl: './main-form.component.html',
-  styleUrls: ['./main-form.component.scss']
+  styleUrls: ['./main-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MainFormComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -20,8 +21,7 @@ export class MainFormComponent implements OnInit, OnDestroy {
     department: [null, Validators.required],
     event: [null, Validators.required],
     theme: [null, Validators.required],
-    text: null,
-    file: [null, Validators.required],
+    text: [null, Validators.required],
     date: [new Date().toLocaleString(), Validators.required]
   });
 
@@ -29,17 +29,18 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
   events: IEvent[] = [];
 
-  hasUnitNumber = false;
-
   eventCategories = [
-    {name: 'Событие 1', abbreviation: '1'},
-    {name: 'Событие 2', abbreviation: '2'},
-    {name: 'Событие 3', abbreviation: '3'}
+    { name: 'Покупка вато', abbreviation: '1' },
+    { name: 'Продажа авто', abbreviation: '2' },
+    { name: 'Сервис авто', abbreviation: '3' }
   ];
   getEvents: any;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
-              private restService: RestService, public dialog: MatDialog) {}
+  constructor(
+    private fb: FormBuilder, private snackBar: MatSnackBar,
+    private restService: RestService, public dialog: MatDialog
+  ) {
+  }
 
   public get searched(): IEvent[] {
     if (this.search.length >= 3) {
@@ -59,17 +60,24 @@ export class MainFormComponent implements OnInit, OnDestroy {
     this.search = event.target.value;
   }
 
-  public onSubmit(): void {
-    this.restService.sendEvent(this.eventsForm.getRawValue());
+  public onSubmit(formDirective: FormGroupDirective): void {
+    this.restService.sendEvent(this.eventsForm.getRawValue()).subscribe((res: IEvent) => {
+      this.events.push(res);
+      setTimeout(() => {
+        this.onClear(formDirective, 'Данные успешно отправлены');
+      }, 0);
+    });
   }
 
-  public onClear(): void {
+  public onClear(formDirective: FormGroupDirective, message = 'Форма очищена'): void {
+    formDirective.resetForm();
     this.eventsForm.reset();
     this.eventsForm.patchValue({ date: new Date().toLocaleString() });
-    this.showNotify('Форма очищена', null);
+    this.showNotify(message, null);
   }
 
   public openDialog(optionElement: IEvent): void {
+    this.search = '';
     this.dialog.open(DialogComponent, {
       data: {
         nameSurname: optionElement.nameSurname,
@@ -97,8 +105,10 @@ export class MainFormComponent implements OnInit, OnDestroy {
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: 'dialog.component.html',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 }

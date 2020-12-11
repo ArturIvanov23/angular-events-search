@@ -1,4 +1,4 @@
-<form [formGroup]="eventsForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="eventsForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
   <mat-card class="events-card">
     <mat-card-header>
       <mat-card-title>Events Search</mat-card-title>
@@ -10,8 +10,8 @@
                (input)="onChange($event)"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of searched; let i = index" [value]="option" (click)="openDialog(option)">
-            {{option.theme}}
+          <mat-option *ngFor="let option of searched" [value]="option.theme" (click)="openDialog(option)">
+            {{ option.theme }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
@@ -23,7 +23,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="ФИО *" formControlName="nameSurname">
             <mat-error *ngIf="eventsForm.controls['nameSurname'].hasError('required')">
-              Last name is <strong>required</strong>
+              Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -34,7 +34,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Подразделение *" formControlName="department">
             <mat-error *ngIf="eventsForm.controls['department'].hasError('required')">
-              Last name is <strong>required</strong>
+              Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -49,7 +49,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="eventsForm.controls['event'].hasError('required')">
-              State is <strong>required</strong>
+              State is <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -60,7 +60,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Тема *" formControlName="theme">
             <mat-error *ngIf="eventsForm.controls['theme'].hasError('required')">
-              Last name is <strong>required</strong>
+              Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -71,19 +71,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Содержание *" formControlName="text">
             <mat-error *ngIf="eventsForm.controls['text'].hasError('required')">
-              Last name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <ngx-mat-file-input placeholder="Вложение *" formControlName="file">
-            </ngx-mat-file-input>
-            <mat-error *ngIf="eventsForm.controls['file'].hasError('required')">
-              Last name is <strong>required</strong>
+              Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -94,7 +82,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Дата и время" formControlName="date">
             <mat-error *ngIf="eventsForm.controls['date'].hasError('required')">
-              Last name is <strong>required</strong>
+              Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
         </div>
@@ -103,7 +91,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" [disabled]="!eventsForm.valid">Отправить</button>
-      <button mat-raised-button color="primary" type="button" (click)="onClear()">Очистить</button>
+      <button mat-raised-button color="primary" type="button" (click)="onClear(formDirective)">Очистить</button>
     </mat-card-actions>
   </mat-card>
 </form>

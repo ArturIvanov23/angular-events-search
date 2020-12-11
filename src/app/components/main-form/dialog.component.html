@@ -1,7 +1,22 @@
-<div mat-dialog-content>
-  {{this.data.nameSurname}}
-  {{this.data.department}}
-  {{this.data.event}}
-  {{this.data.theme}}
-  {{this.data.text}}
+<div class="popup" mat-dialog-content>
+  <span>
+    <strong>Тема: </strong>
+    {{this.data.theme}}
+  </span>
+  <span>
+    <strong>ФИО: </strong>
+    {{this.data.nameSurname}}
+  </span>
+  <span>
+    <strong>Подразделение: </strong>
+    {{this.data.department}}
+  </span>
+  <span>
+    <strong>Событие: </strong>
+    {{this.data.event}}
+  </span>
+  <span>
+    <strong>Текст: </strong>
+    {{this.data.text}}
+  </span>
 </div>

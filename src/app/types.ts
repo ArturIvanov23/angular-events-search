@@ -4,9 +4,9 @@ export interface IEvent {
   event: string;
   theme: string;
   text: string;
-  file: string;
   date: Date;
 }
+
 export interface DialogData {
   nameSurname: string;
   department: string;
