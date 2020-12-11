@@ -30,7 +30,7 @@ export class MainFormComponent implements OnInit, OnDestroy {
   events: IEvent[] = [];
 
   eventCategories = [
-    { name: 'Покупка вато', abbreviation: '1' },
+    { name: 'Покупка авто', abbreviation: '1' },
     { name: 'Продажа авто', abbreviation: '2' },
     { name: 'Сервис авто', abbreviation: '3' }
   ];
