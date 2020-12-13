@@ -16,6 +16,6 @@ export class RestService {
   }
 
   public sendEvent(event): Observable<any> {
-    return this.http.post('http://localhost:3000/sendEvent', event);
+    return this.http.post(`${environment.url}/sendEvent`, event);
   }
 }
