@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroupDirective, Validators} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RestService } from '../../services/rest.service';
 import { Subscription } from 'rxjs';
@@ -13,8 +13,10 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
   styleUrls: ['./main-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MainFormComponent implements OnInit, OnDestroy {
+export class MainFormComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
+
+
 
   eventsForm = this.fb.group({
     nameSurname: [null, Validators.required],
@@ -22,6 +24,7 @@ export class MainFormComponent implements OnInit, OnDestroy {
     event: [null, Validators.required],
     theme: [null, Validators.required],
     text: [null, Validators.required],
+    file: [null],
     date: [new Date().toLocaleString(), Validators.required]
   });
 
@@ -45,8 +48,6 @@ export class MainFormComponent implements OnInit, OnDestroy {
   public get searched(): IEvent[] {
     if (this.search.length >= 3) {
       return this.events.filter(item => item.theme && item.theme.includes(this.search));
-    } else {
-      return this.events.filter(item => item.theme);
     }
   }
 
@@ -56,7 +57,12 @@ export class MainFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onChange(event): void {
+  public onInput(event): void {
+    this.subscriptions.push(
+      this.restService.getEvents().subscribe((events: IEvent[]) => {
+        this.events = events;
+      })
+    );
     this.search = event.target.value;
   }
 
@@ -85,16 +91,10 @@ export class MainFormComponent implements OnInit, OnDestroy {
         event: optionElement.event,
         theme: optionElement.theme,
         text: optionElement.text,
+        file: optionElement.file,
+        date: optionElement.date,
       }
     });
-  }
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.restService.getEvents().subscribe((events: IEvent[]) => {
-        this.events = events;
-      })
-    );
   }
 
   ngOnDestroy(): void {

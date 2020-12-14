@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RestService } from './services/rest.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxMatFileInputModule
   ],
   providers: [RestService],
   bootstrap: [AppComponent]

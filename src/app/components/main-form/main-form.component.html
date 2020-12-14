@@ -7,7 +7,7 @@
                placeholder="Поиск"
                matInput
                [value]="search"
-               (input)="onChange($event)"
+               (input)="onInput($event)"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let option of searched" [value]="option.theme" (click)="openDialog(option)">
@@ -71,6 +71,18 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Содержание *" formControlName="text">
             <mat-error *ngIf="eventsForm.controls['text'].hasError('required')">
+              Поле <strong>обязательно</strong> для заполнения
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <ngx-mat-file-input placeholder="Вложение *" formControlName="file">
+            </ngx-mat-file-input>
+            <mat-error *ngIf="eventsForm.controls['file'].hasError('required')">
               Поле <strong>обязательно</strong> для заполнения
             </mat-error>
           </mat-form-field>
